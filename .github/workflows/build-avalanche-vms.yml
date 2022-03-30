@@ -2,8 +2,8 @@
 on: workflow_dispatch
 
 jobs:
-  build-vm:
+  build-vms:
     uses: ./.github/workflows/build.yml
     with:
-      buildRepo: https://github.com/Nuttymoon/subnet-evm
+      buildRepo: Nuttymoon/subnet-evm
       buildCommand: ./scripts/build.sh ./build/subnetevm-v0.1.2/subnetevm
