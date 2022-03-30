@@ -3,7 +3,7 @@ on: workflow_dispatch
 
 jobs:
   build-vms:
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/build-vm.yml
     with:
       buildRepo: Nuttymoon/subnet-evm
       buildCommand: ./scripts/build.sh ./build/subnetevm-v0.1.2/subnetevm

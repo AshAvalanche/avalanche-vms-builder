@@ -1,0 +1,27 @@
+---
+on:
+  workflow_call:
+    inputs:
+      buildRepo:
+        required: true
+        type: string
+      buildCommand:
+        required: true
+        type: string
+
+jobs:
+  build-vm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout VM repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.buildRepo }}
+          path: ${{ inputs.buildRepo }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+
+      - name: Build VM
+        run: ${{ inputs.buildCommand }}
+        working-directory: ${{ inputs.buildRepo }}
