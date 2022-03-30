@@ -5,6 +5,7 @@ jobs:
   build-vm:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/build.yml
         with:
           buildRepo: https://github.com/Nuttymoon/subnet-evm
