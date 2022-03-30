@@ -2,13 +2,19 @@
 on:
   workflow_call:
     inputs:
-      buildRepo:
+      vmName:
+        required: true
+        type: string
+      vmRepo:
         required: true
         type: string
       buildCommand:
         required: true
         type: string
       buildTag:
+        required: true
+        type: string
+      buildArchive:
         required: true
         type: string
 
@@ -19,8 +25,8 @@ jobs:
       - name: Checkout VM repository
         uses: actions/checkout@v3
         with:
-          repository: ${{ inputs.buildRepo }}
-          path: ${{ inputs.buildRepo }}
+          repository: ${{ inputs.vmRepo }}
+          path: ${{ inputs.vmRepo }}
           ref: ${{ inputs.buildTag }}
 
       - name: Setup Go
@@ -30,5 +36,11 @@ jobs:
           check-latest: true
 
       - name: Build VM
-        run: ${{ format(inputs.buildCommand, inputs.buildTag) }}
-        working-directory: ${{ inputs.buildRepo }}
+        run: ${{ format(inputs.buildCommand, inputs.vmName, inputs.buildTag) }}
+        working-directory: ${{ inputs.vmRepo }}
+
+      - name: Compress VM binary to tar.gz
+        run: |
+          tar -czf ./${{ format(inputs.buildArchive, inputs.vmName, inputs.buildTag) }} \
+            ./${{ inputs.vmName }}-${{ inputs.buildTag }}
+        working-directory: ${{ inputs.vmRepo }}/build

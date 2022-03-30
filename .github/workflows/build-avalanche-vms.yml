@@ -5,6 +5,8 @@ jobs:
   build-vms:
     uses: ./.github/workflows/build-vm.yml
     with:
-      buildRepo: Nuttymoon/subnet-evm
-      buildCommand: ./scripts/build.sh ./build/subnetevm-{0}/subnetevm
+      vmName: subnetevm
+      vmRepo: Nuttymoon/subnet-evm
+      buildCommand: "./scripts/build.sh ./build/{0}-{1}/{0}"
       buildTag: v0.1.2
+      buildArchive: "{0}-linux-amd64-{1}.tar.gz"
