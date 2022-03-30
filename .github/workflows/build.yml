@@ -1,0 +1,19 @@
+---
+on:
+  workflow_call:
+    inputs:
+      build-repo:
+        required: true
+        type: string
+      build-command:
+        required: true
+        type: string
+
+jobs:
+  build-vm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.build-repo }}
+          path: ${{ inputs.build-repo }}
