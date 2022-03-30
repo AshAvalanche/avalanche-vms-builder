@@ -1,5 +1,5 @@
 ---
-on:
+on: workflow_dispatch
 
 jobs:
   build-vm:
@@ -7,5 +7,5 @@ jobs:
     steps:
       - uses: ./.github/workflows/build.yml
         with:
-          build-repo: https://github.com/Nuttymoon/subnet-evm
-          build-command: ./build/subnetevm-v0.1.2/subnetevm
+          buildRepo: https://github.com/Nuttymoon/subnet-evm
+          buildCommand: ./build/subnetevm-v0.1.2/subnetevm

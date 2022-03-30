@@ -2,10 +2,10 @@
 on:
   workflow_call:
     inputs:
-      build-repo:
+      buildRepo:
         required: true
         type: string
-      build-command:
+      buildCommand:
         required: true
         type: string
 
@@ -15,5 +15,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: ${{ inputs.build-repo }}
-          path: ${{ inputs.build-repo }}
+          repository: ${{ inputs.buildRepo }}
+          # path: ${{ inputs.buildRepo }}
