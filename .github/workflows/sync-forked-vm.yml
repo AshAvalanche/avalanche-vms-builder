@@ -1,0 +1,65 @@
+---
+name: Sync and build forked VM
+
+on:
+  workflow_call:
+    inputs:
+      vmName:
+        required: true
+        type: string
+      vmForkRepo:
+        required: true
+        type: string
+      vmSourceRepo:
+        required: true
+        type: string
+      buildCommand:
+        required: true
+        type: string
+      buildArchive:
+        required: true
+        type: string
+
+jobs:
+  get-missing-releases:
+    runs-on: ubuntu-latest
+    outputs:
+      releases: ${{ steps.get_missing_releases.outputs.releases }}
+    steps:
+      - name: Get missing releases in fork repository
+        id: get_missing_releases
+        run: |
+          source_releases=$(curl -s https://api.github.com/repos/${{ inputs.vmSourceRepo }}/releases | jq '.[].tag_name' | jq -sc)
+          fork_releases=$(curl -s https://api.github.com/repos/${{ inputs.vmForkRepo }}/releases | jq '.[].tag_name' | jq -sc)
+          missing_releases=$(jq -nc "$source_releases - $fork_releases")
+          echo "::set-output name=releases::$missing_releases"
+
+  build-vm-releases:
+    needs: get-missing-releases
+    strategy:
+      matrix:
+        release: ${{ fromJSON(needs.get-missing-releases.outputs.releases) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout VM repository
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.vmForkRepo }}
+          path: ${{ inputs.vmForkRepo }}
+          ref: ${{ matrix.release }}
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ">=1.16.8"
+          check-latest: true
+
+      - name: Build VM
+        run: ${{ format(inputs.buildCommand, inputs.vmName, matrix.release) }}
+        working-directory: ${{ inputs.vmForkRepo }}
+
+      - name: Compress VM binary to tar.gz
+        run: |
+          tar -czf ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }} \
+            ./${{ inputs.vmName }}-${{ matrix.release }}
+        working-directory: ${{ inputs.vmForkRepo }}/build

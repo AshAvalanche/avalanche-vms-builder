@@ -1,0 +1,14 @@
+---
+name: Sync and build releases of Avalanche VMs forks
+
+on: workflow_dispatch
+
+jobs:
+  sync-build-subnetevm:
+    uses: ./.github/workflows/sync-forked-vm.yml
+    with:
+      vmName: subnetevm
+      vmForkRepo: Nuttymoon/subnet-evm
+      vmSourceRepo: ava-labs/subnet-evm
+      buildCommand: "./scripts/build.sh ./build/{0}-{1}/{0}"
+      buildArchive: "{0}-linux-amd64-{1}.tar.gz"
