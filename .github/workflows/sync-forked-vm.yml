@@ -44,10 +44,11 @@ jobs:
         release: ${{ fromJSON(needs.get-missing-releases.outputs.releases) }}
     runs-on: ubuntu-latest
     steps:
-      - name: Get missing release info
+      - name: Create missing release
         run: |
-          release_title=$(curl -s https://api.github.com/repos/${{ inputs.vmSourceRepo }}/releases | jq '.[] | select(.tag_name == "${{ matrix.release }}") | .name')
-          gh release create ${{ matrix.release }} -t "$release_title" --generate-notes -R ${{ inputs.vmForkRepo }}
+          release_title=$(curl -s https://api.github.com/repos/${{ inputs.vmSourceRepo }}/releases | jq -r '.[] | select(.tag_name == "${{ matrix.release }}") | .name')
+          release_notes=$(curl -s https://api.github.com/repos/${{ inputs.vmSourceRepo }}/releases | jq -r '.[] | select(.tag_name == "${{ matrix.release }}") | .body')
+          gh release create ${{ matrix.release }} -R ${{ inputs.vmForkRepo }} -t "$release_title" -n "$release_notes"
         env:
           GITHUB_TOKEN: ${{ secrets.githubPat }}
 
