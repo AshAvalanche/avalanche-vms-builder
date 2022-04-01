@@ -4,6 +4,20 @@ name: Sync and build releases of Avalanche VMs forks
 on: workflow_dispatch
 
 jobs:
+  sync-build-spacesvm:
+    uses: ./.github/workflows/sync-forked-vm.yml
+    with:
+      vmName: spacesvm
+      vmForkRepo: Nuttymoon/spacesvm
+      vmSourceRepo: ava-labs/spacesvm
+      buildCommand: |
+        ./scripts/build.sh
+        mkdir ./build/{0}-{1}
+        mv ./build/sqja3uK17MJxfC7AN8nGadBw9JK5BcrsNwNynsqP5Gih8M5Bm ./build/{0}-{1}/{0}
+      buildArchive: "{0}-linux-amd64-{1}.tar.gz"
+    secrets:
+      githubPat: ${{ secrets.NUTTYMOON_PAT }}
+
   sync-build-subnetevm:
     uses: ./.github/workflows/sync-forked-vm.yml
     with:
