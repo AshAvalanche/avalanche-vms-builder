@@ -3,6 +3,9 @@ name: Sync and build forked VM
 
 on:
   workflow_call:
+    secrets:
+      githubPat:
+        required: true
     inputs:
       vmName:
         required: true
@@ -46,7 +49,7 @@ jobs:
           release_title=$(curl -s https://api.github.com/repos/${{ inputs.vmSourceRepo }}/releases | jq '.[] | select(.tag_name == "${{ matrix.release }}") | .name')
           gh release create ${{ matrix.release }} -t "$release_title" --generate-notes -R ${{ inputs.vmForkRepo }}
         env:
-          GH_TOKEN: ${{ secrets.NUTTYMOON_PAT }}
+          GITHUB_TOKEN: ${{ secrets.githubPat }}
 
   build-vm-releases:
     needs: [get-missing-releases, create-missing-releases]

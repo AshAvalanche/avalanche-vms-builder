@@ -12,3 +12,5 @@ jobs:
       vmSourceRepo: ava-labs/subnet-evm
       buildCommand: "./scripts/build.sh ./build/{0}-{1}/{0}"
       buildArchive: "{0}-linux-amd64-{1}.tar.gz"
+    secrets:
+      githubPat: ${{ secrets.NUTTYMOON_PAT }}
