@@ -81,3 +81,11 @@ jobs:
           tar -czf ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }} \
             ./${{ inputs.vmName }}-${{ matrix.release }}
         working-directory: ${{ inputs.vmForkRepo }}/build
+
+      - name: Upload VM binary to release
+        run: |
+          gh release upload ${{ matrix.release }} -R ${{ inputs.vmForkRepo }} \
+            ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }}
+        working-directory: ${{ inputs.vmForkRepo }}/build
+        env:
+          GITHUB_TOKEN: ${{ secrets.githubPat }}
