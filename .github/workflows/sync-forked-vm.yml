@@ -29,6 +29,11 @@ jobs:
     outputs:
       releases: ${{ steps.get_missing_releases.outputs.releases }}
     steps:
+      - name: Sync fork repository with source
+        run: gh repo sync ${{ inputs.vmForkRepo }} --source ${{ inputs.vmSourceRepo }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.githubPat }}
+
       - name: Get missing releases in fork repository
         id: get_missing_releases
         run: |
@@ -39,6 +44,7 @@ jobs:
 
   create-missing-releases:
     needs: get-missing-releases
+    if: fromJSON(needs.get-missing-releases.outputs.releases)[0] != null
     strategy:
       matrix:
         release: ${{ fromJSON(needs.get-missing-releases.outputs.releases) }}
@@ -54,6 +60,7 @@ jobs:
 
   build-vm-releases:
     needs: [get-missing-releases, create-missing-releases]
+    if: fromJSON(needs.get-missing-releases.outputs.releases)[0] != null
     strategy:
       matrix:
         release: ${{ fromJSON(needs.get-missing-releases.outputs.releases) }}
