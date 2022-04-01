@@ -1,9 +1,23 @@
 ---
 name: Sync and build releases of Avalanche VMs forks
 
-on: workflow_dispatch
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
+  sync-build-timestampvm:
+    uses: ./.github/workflows/sync-forked-vm.yml
+    with:
+      vmName: timestampvm
+      vmForkRepo: Nuttymoon/timestampvm
+      vmSourceRepo: ava-labs/timestampvm
+      buildCommand: "./scripts/build.sh ./build/{0}-{1} {0}"
+      buildArchive: "{0}-linux-amd64-{1}.tar.gz"
+    secrets:
+      githubPat: ${{ secrets.NUTTYMOON_PAT }}
+
   sync-build-spacesvm:
     uses: ./.github/workflows/sync-forked-vm.yml
     with:
