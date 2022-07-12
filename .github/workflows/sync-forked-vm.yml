@@ -89,10 +89,17 @@ jobs:
             ./${{ inputs.vmName }}-${{ matrix.release }}
         working-directory: ${{ inputs.vmForkRepo }}/build
 
-      - name: Upload VM binary to release
+      - name: Compute VM tar.gz SHA-512 checksum
+        run: |
+          sha512sum ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }} \
+            > ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }}.sha512
+        working-directory: ${{ inputs.vmForkRepo }}/build
+
+      - name: Attach VM tar.gz and checksum to release
         run: |
           gh release upload ${{ matrix.release }} -R ${{ inputs.vmForkRepo }} \
-            ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }}
+            ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }} \
+            ./${{ format(inputs.buildArchive, inputs.vmName, matrix.release) }}.sha512
         working-directory: ${{ inputs.vmForkRepo }}/build
         env:
           GITHUB_TOKEN: ${{ secrets.githubPat }}
