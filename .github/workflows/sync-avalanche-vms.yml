@@ -7,6 +7,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  sync-build-blobvm:
+    uses: ./.github/workflows/sync-forked-vm.yml
+    with:
+      vmName: blobvm
+      vmForkRepo: Nuttymoon/blobvm
+      vmSourceRepo: ava-labs/blobvm
+      buildCommand: |
+        ./scripts/build.sh
+        mkdir ./build/{0}-{1}
+        vm_id=$(cat scripts/build.sh | grep -oP '(kM6h4LYe3AcEU1MB2UNg6ubzAiDAALZzpVrbX8zn3hXF6Avd8|sqja3uK17MJxfC7AN8nGadBw9JK5BcrsNwNynsqP5Gih8M5Bm)')
+        mv "./build/$vm_id" ./build/{0}-{1}/{0}
+      buildArchive: "{0}-linux-amd64-{1}.tar.gz"
+    secrets:
+      githubPat: ${{ secrets.NUTTYMOON_PAT }}
+
   sync-build-timestampvm:
     uses: ./.github/workflows/sync-forked-vm.yml
     with:
