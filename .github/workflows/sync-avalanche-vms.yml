@@ -11,7 +11,7 @@ jobs:
     uses: ./.github/workflows/sync-forked-vm.yml
     with:
       vmName: blobvm
-      vmForkRepo: Nuttymoon/blobvm
+      vmForkRepo: AshAvalanche/blobvm
       vmSourceRepo: ava-labs/blobvm
       buildCommand: |
         ./scripts/build.sh
@@ -20,24 +20,24 @@ jobs:
         mv "./build/$vm_id" ./build/{0}-{1}/{0}
       buildArchive: "{0}-linux-amd64-{1}.tar.gz"
     secrets:
-      githubPat: ${{ secrets.NUTTYMOON_PAT }}
+      githubPat: ${{ secrets.ASHAVALANCHEBOT_PAT }}
 
   sync-build-timestampvm:
     uses: ./.github/workflows/sync-forked-vm.yml
     with:
       vmName: timestampvm
-      vmForkRepo: Nuttymoon/timestampvm
+      vmForkRepo: AshAvalanche/timestampvm
       vmSourceRepo: ava-labs/timestampvm
       buildCommand: "./scripts/build.sh ./build/{0}-{1} {0}"
       buildArchive: "{0}-linux-amd64-{1}.tar.gz"
     secrets:
-      githubPat: ${{ secrets.NUTTYMOON_PAT }}
+      githubPat: ${{ secrets.ASHAVALANCHEBOT_PAT }}
 
   sync-build-spacesvm:
     uses: ./.github/workflows/sync-forked-vm.yml
     with:
       vmName: spacesvm
-      vmForkRepo: Nuttymoon/spacesvm
+      vmForkRepo: AshAvalanche/spacesvm
       vmSourceRepo: ava-labs/spacesvm
       buildCommand: |
         ./scripts/build.sh
@@ -45,15 +45,15 @@ jobs:
         mv ./build/sqja3uK17MJxfC7AN8nGadBw9JK5BcrsNwNynsqP5Gih8M5Bm ./build/{0}-{1}/{0}
       buildArchive: "{0}-linux-amd64-{1}.tar.gz"
     secrets:
-      githubPat: ${{ secrets.NUTTYMOON_PAT }}
+      githubPat: ${{ secrets.ASHAVALANCHEBOT_PAT }}
 
   sync-build-subnetevm:
     uses: ./.github/workflows/sync-forked-vm.yml
     with:
       vmName: subnetevm
-      vmForkRepo: Nuttymoon/subnet-evm
+      vmForkRepo: AshAvalanche/subnet-evm
       vmSourceRepo: ava-labs/subnet-evm
       buildCommand: "./scripts/build.sh ./build/{0}-{1}/{0}"
       buildArchive: "{0}-linux-amd64-{1}.tar.gz"
     secrets:
-      githubPat: ${{ secrets.NUTTYMOON_PAT }}
+      githubPat: ${{ secrets.ASHAVALANCHEBOT_PAT }}
