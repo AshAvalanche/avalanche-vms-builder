@@ -10,3 +10,5 @@ Target repositories:
 - [AshAvalanche/spacesvm](https://github.com/AshAvalanche/spacesvm/releases)
 - [AshAvalanche/subnet-evm](https://github.com/AshAvalanche/subnet-evm/releases)
 - [AshAvalanche/timestampvm](https://github.com/AshAvalanche/timestampvm/releases)
+
+Scheduling: Daily around 00:00 UTC
