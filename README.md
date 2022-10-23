@@ -4,11 +4,15 @@
 
 This repository contains GitHub Actions workflows to automatically build new versions of Avalanche VMs and attach the resulting binaries as assets to VMs' repositories.
 
-Target repositories:
+## Target repositories
 
-- [AshAvalanche/blobvm](https://github.com/AshAvalanche/blobvm/releases)
-- [AshAvalanche/spacesvm](https://github.com/AshAvalanche/spacesvm/releases)
-- [AshAvalanche/subnet-evm](https://github.com/AshAvalanche/subnet-evm/releases)
-- [AshAvalanche/timestampvm](https://github.com/AshAvalanche/timestampvm/releases)
+| VM          | Repository                                                                       | Latest version |
+| ----------- | -------------------------------------------------------------------------------- | -------------- |
+| blobvm      | [AshAvalanche/blobvm](https://github.com/AshAvalanche/blobvm/releases)           | `v0.0.9`       |
+| spacesvm    | [AshAvalanche/spacesvm](https://github.com/AshAvalanche/spacesvm/releases)       | `v0.0.9`       |
+| subnetevm   | [AshAvalanche/subnet-evm](https://github.com/AshAvalanche/subnet-evm/releases)   | `v0.4.0`       |
+| timestampvm | [AshAvalanche/timestampvm](https://github.com/AshAvalanche/timestampvm/releases) | `v1.2.6`       |
 
-Scheduling: Daily around 00:00 UTC
+## Scheduling
+
+Daily around 00:00 UTC
