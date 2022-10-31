@@ -108,6 +108,7 @@ jobs:
     needs: [get-missing-releases, build-vm-releases]
     if: fromJSON(needs.get-missing-releases.outputs.releases)[0] != null
     strategy:
+      max-parallel: 1
       matrix:
         release: ${{ fromJSON(needs.get-missing-releases.outputs.releases) }}
     runs-on: ubuntu-latest
