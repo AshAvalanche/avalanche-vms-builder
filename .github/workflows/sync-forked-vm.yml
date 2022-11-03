@@ -107,10 +107,6 @@ jobs:
   update-readme:
     needs: [get-missing-releases, build-vm-releases]
     if: fromJSON(needs.get-missing-releases.outputs.releases)[0] != null
-    strategy:
-      max-parallel: 1
-      matrix:
-        release: ${{ fromJSON(needs.get-missing-releases.outputs.releases) }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -118,7 +114,8 @@ jobs:
 
       - name: Update README.md and push to repository
         run: |
-          sed -ri 's/(${{ inputs.vmName }}.*)`v.*`/\1`${{ matrix.release }}`/' README.md
+          last_version=$(echo '${{ needs.get-missing-releases.outputs.releases }}' | jq -r 'sort | .[-1]')
+          sed -ri "s/(${{ inputs.vmName }}.*)\`v.*\`/\1\`${last_version}\`/" README.md
           git config --global user.name 'AshAvalancheBot'
           git config --global user.email '109693092+AshAvalancheBot@users.noreply.github.com'
           git add README.md
