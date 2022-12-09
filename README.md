@@ -9,7 +9,7 @@ This repository contains GitHub Actions workflows to automatically build new ver
 | VM          | Repository                                                                       | Latest version |
 | ----------- | -------------------------------------------------------------------------------- | -------------- |
 | blobvm      | [AshAvalanche/blobvm](https://github.com/AshAvalanche/blobvm/releases)           | `v0.0.10`       |
-| spacesvm    | [AshAvalanche/spacesvm](https://github.com/AshAvalanche/spacesvm/releases)       | `v0.0.12`       |
+| spacesvm    | [AshAvalanche/spacesvm](https://github.com/AshAvalanche/spacesvm/releases)       | `v0.0.14`       |
 | subnetevm   | [AshAvalanche/subnet-evm](https://github.com/AshAvalanche/subnet-evm/releases)   | `v0.4.5`       |
 | timestampvm | [AshAvalanche/timestampvm](https://github.com/AshAvalanche/timestampvm/releases) | `v1.2.9`       |
 
