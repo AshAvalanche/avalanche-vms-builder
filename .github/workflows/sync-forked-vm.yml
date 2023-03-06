@@ -40,7 +40,7 @@ jobs:
           source_releases=$(curl -s https://api.github.com/repos/${{ inputs.vmSourceRepo }}/releases | jq '.[].tag_name' | jq -sc)
           fork_releases=$(curl -s https://api.github.com/repos/${{ inputs.vmForkRepo }}/releases | jq '.[].tag_name' | jq -sc)
           missing_releases=$(jq -nc "$source_releases - $fork_releases")
-          echo "::set-output name=releases::$missing_releases"
+          echo "releases=$missing_releases" >> $GITHUB_OUTPUT
 
   create-missing-releases:
     needs: get-missing-releases
