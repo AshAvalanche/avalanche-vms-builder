@@ -53,7 +53,10 @@ jobs:
       vmName: subnetevm
       vmForkRepo: AshAvalanche/subnet-evm
       vmSourceRepo: ava-labs/subnet-evm
-      buildCommand: "./scripts/build.sh ./build/{0}-{1}/{0}"
+      buildCommand: |
+        ./scripts/build.sh ./build/srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy
+        mkdir ./build/{0}-{1}
+        mv build/srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy build/{0}-{1}/{0}
       buildArchive: "{0}-linux-amd64-{1}.tar.gz"
     secrets:
       githubPat: ${{ secrets.ASHAVALANCHEBOT_PAT }}
